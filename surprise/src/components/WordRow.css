@@ -1,0 +1,19 @@
+.word-row span {
+  font-family: monospace;
+  display: inline-block;
+  padding: 0.5rem;
+  border: 1px solid #fff;
+  margin: 0rem 0.25rem 0rem 0.25rem;
+}
+
+.green {
+  background-color: green;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.word-row {
+  padding-bottom: 0.5rem;
+}
