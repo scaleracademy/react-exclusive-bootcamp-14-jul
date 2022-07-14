@@ -4,12 +4,22 @@
     <title>React Library</title>
 
     <!-- Insert React and React DOM library -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   </head>
   <body>
     <div id="app"></div>
 
-    <script>
+    <script type="text/babel">
+      const H1 = () => <h1> Hello World ! </h1>
+      const App = () => <div> 
+        <H1 /> 
+        <H1 />  
+      </div>
+
+      ReactDOM.createRoot(document.getElementById("app")).render(<App />)
     </script>
   </body>
 </html>

@@ -1,13 +1,25 @@
+import WordRow from './components/WordRow';
+import { checkGuess } from './utils/word-checker';
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   const WordOfTheDay = 'FORGO'
+  const [guesses, setGuesses] = React.useState([])
+  const [currentWord, setCurrentWord] = React.useState('');
 
-  const backspace = () => {}
-  const enter = () => {}
-  const word = (letter) => {}
+  const backspace = () => {
+    setCurrentWord(prev => prev && prev.slice(0, -1));
+  }
+  const enter = () => {
+    if (currentWord.length == 5) {
+      setGuesses(prev => [...prev, currentWord])
+      setCurrentWord('');
+    }
+  }
+  const word = (letter) => {
+    setCurrentWord(prev => prev.length == 5 ? prev : prev + letter.toUpperCase())
+  }
 
   const handleKeyDown = e => {
     let pressedKey = String(e.key)
@@ -34,23 +46,15 @@ function App() {
     return () => {
       window.removeEventListener('keyup', handleKeyDown);
     };
-  }, []);
+  }, [currentWord]);
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {guesses.map(guess => (
+          <WordRow word={guess} result={checkGuess(guess, WordOfTheDay)} />
+        ))}
+        <WordRow word={currentWord} />
       </header>
     </div>
   );
