@@ -7,6 +7,7 @@ function App() {
   const WordOfTheDay = 'FORGO'
   const [guesses, setGuesses] = React.useState([])
   const [currentWord, setCurrentWord] = React.useState('');
+  const [gameState, setGameState] = React.useState('running');
 
   const backspace = () => {
     setCurrentWord(prev => prev && prev.slice(0, -1));
@@ -15,6 +16,16 @@ function App() {
     if (currentWord.length == 5) {
       setGuesses(prev => [...prev, currentWord])
       setCurrentWord('');
+
+      const result = checkGuess(currentWord, WordOfTheDay);
+      if(
+        Object.values(result).every(v => v === 'green') &&
+        Object.values(result).length === 5
+      ) {
+        setGameState('won')
+      } else if (guesses.length == 4) {
+        setGameState('lost')
+      }
     }
   }
   const word = (letter) => {
@@ -54,7 +65,7 @@ function App() {
         {guesses.map(guess => (
           <WordRow word={guess} result={checkGuess(guess, WordOfTheDay)} />
         ))}
-        <WordRow word={currentWord} />
+        {gameState === 'running' && <WordRow word={currentWord} />}
       </header>
     </div>
   );
